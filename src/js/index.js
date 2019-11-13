@@ -8,7 +8,10 @@
 import {sum} from './module1'
 import {sub} from './module2'
 import module3 from './module3'
+//在入口文件中引入json文件，如下写法
 import a from '../json/test.json'
+//在入口文件中引入样式，不用变量接，不用写from
+import '../css/index.less'
 
 console.log(sum(1, 2));
 console.log(sub(3, 4));
@@ -20,3 +23,7 @@ console.log(a,typeof a)
 setTimeout(()=>{
     console.log('定时器到点了')
 },1000)
+
+console.log(1)
+alert(1)
+console.log(1 == 2)

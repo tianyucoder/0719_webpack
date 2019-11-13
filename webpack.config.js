@@ -12,10 +12,10 @@ module.exports  = {
       }
     */
   output: {
-    path: resolve(__dirname, 'dist/js'), //输出路径
-    filename: 'index.js' //输出的文件名
+    path: resolve(__dirname, 'dist'), //输出路径
+    filename: './js/index.js' //输出的文件名
   },
-  mode: 'production', //配置工作模式
+  mode: 'development', //配置工作模式
 
   /*所有的laoder都要在module对象中的rules属性中
   rules是一个数组，数组中的每一个对象就是一个loader
@@ -31,14 +31,48 @@ module.exports  = {
           'less-loader' //将less编译为css，但不生成单独的css文件，在内存中。
         ],
       },
+      //js语法检查
       {
         test: /\.js$/,  //只检测js文件
         exclude: /node_modules/,  //排除node_modules文件夹
         enforce: "pre",  //提前加载使用
-        use: { //使用eslint-loader解析
-          loader: "eslint-loader"
+        use: ['eslint-loader']
+      },
+      //js语法转换（es6->es5）
+      {
+        test: /\.js$/, //只检测js文件
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              ['@babel/preset-env', {
+                  useBuiltIns: 'usage',  // 按需引入需要使用polyfill
+                  corejs: { version: 3 }, // 解决不能够找到core-js的问题
+                  targets: { // 指定兼容性处理哪些浏览器
+                    "chrome": "58",
+                    "ie": "9"
+                  }}]
+            ],
+            cacheDirectory: true, // 开启babel缓存
+          }
         }
-      }
+      },
+      //使用url-loader处理样式文件中的图片
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,//// 8kb --> 8kb以下的图片会base64处理
+              publicPath: '../dist/images',  // 决定图片的url路径
+              outputPath: 'images', // 决定文件本地输出路径
+              name: '[hash:5].[ext]' // 修改文件名称 [hash:8] hash值取8位  [ext] 文件扩展名
+            },
+          },
+        ],
+      },
     ]
   }
 }

@@ -9,12 +9,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "eslint": "^6.6.0",
     "eslint-loader": "^3.0.2",
+    "file-loader": "^4.2.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "style-loader": "^1.0.0",
+    "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
@@ -28,13 +33,18 @@
       "node": true
     },
     "globals": {
-      "$": "readonly"
+      "$": "readonly",
+      "Promise": "readonly"
     },
     "rules": {
       "no-console": 0,
-      "eqeqeq": 0,
-      "no-alert": 0
+      "eqeqeq": 2,
+      "no-alert": 2
     },
     "extends": "eslint:recommended"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.7.0",
+    "core-js": "^3.4.1"
   }
 }

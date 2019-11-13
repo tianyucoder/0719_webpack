@@ -5,6 +5,7 @@
 *   该index.js是webpack的【入口文件】
 *   该文件可以用于汇总：js、css、json、图片、音频、视频
 * */
+//import '@babel/polyfill'; // 包含ES6的高级语法的转换,不管编码人员用了哪些新语法，全部的新语法都转换。
 import {sum} from './module1'
 import {sub} from './module2'
 import module3 from './module3'
@@ -12,6 +13,7 @@ import module3 from './module3'
 import a from '../json/test.json'
 //在入口文件中引入样式，不用变量接，不用写from
 import '../css/index.less'
+
 
 console.log(sum(1, 2));
 console.log(sub(3, 4));
@@ -24,6 +26,18 @@ setTimeout(()=>{
     console.log('定时器到点了')
 },1000)
 
-console.log(1)
-alert(1)
-console.log(1 == 2)
+console.log(1);
+let x = 2
+console.log(x)
+
+/*let myPromise = new Promise((resolve)=>{
+  setTimeout(()=>{
+    resolve('哈哈')
+  },2000)
+})
+myPromise.then((data)=>{
+    console.log(data)
+})*/
+
+//alert(1)
+//console.log(1 == 2)

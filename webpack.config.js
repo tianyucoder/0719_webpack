@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports  = {
   //简化写法
-  entry:'./src/js/index.js', //入口
+  entry:['./src/js/index.js','./src/index.html'], //入口
   /*完整写法：
       entry:{
         main:'./src/js/app.js'
@@ -103,7 +103,9 @@ module.exports  = {
     open: true, // 自动打开浏览器
     compress: true, // 启动gzip压缩
     port: 3000, // 端口号
-  }
+    hot:true //开启热模替换功能 HMR
+  },
+  devtool:'cheap-module-eval-source-map'
 }
 
 

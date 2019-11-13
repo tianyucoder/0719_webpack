@@ -15,7 +15,6 @@ import a from '../json/test.json'
 import '../css/index.less'
 import '../css/iconfont.less'
 
-
 console.log(sum(1, 2));
 console.log(sub(3, 4));
 console.log(module3.mul(5,6));
@@ -39,6 +38,4 @@ let myPromise = new Promise((resolve)=>{
 myPromise.then((data)=>{
     console.log(data)
 })
-
-//alert(1)
-//console.log(1 == 2)
+myPromise()

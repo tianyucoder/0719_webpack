@@ -13,6 +13,7 @@ import module3 from './module3'
 import a from '../json/test.json'
 //在入口文件中引入样式，不用变量接，不用写from
 import '../css/index.less'
+import '../css/iconfont.less'
 
 
 console.log(sum(1, 2));
@@ -30,14 +31,14 @@ console.log(1);
 let x = 2
 console.log(x)
 
-/*let myPromise = new Promise((resolve)=>{
+let myPromise = new Promise((resolve)=>{
   setTimeout(()=>{
     resolve('哈哈')
   },2000)
 })
 myPromise.then((data)=>{
     console.log(data)
-})*/
+})
 
 //alert(1)
 //console.log(1 == 2)

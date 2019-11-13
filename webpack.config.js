@@ -2,6 +2,7 @@
 * 此文件是webpack的配置文件，用于指定webpack去执行哪些任务
 * */
 const {resolve} = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports  = {
   //简化写法
@@ -66,14 +67,42 @@ module.exports  = {
             loader: 'url-loader',
             options: {
               limit: 8192,//// 8kb --> 8kb以下的图片会base64处理
-              publicPath: '../dist/images',  // 决定图片的url路径
+              publicPath: 'images/',  // 决定图片的url路径
               outputPath: 'images', // 决定文件本地输出路径
               name: '[hash:5].[ext]' // 修改文件名称 [hash:8] hash值取8位  [ext] 文件扩展名
             },
           },
         ],
       },
+      //使用html-loader处理html中的标签资源
+      {
+        test: /\.(html)$/,
+        use: {
+          loader: 'html-loader'
+        }
+      },
+      //使用file-loader处理其他资源
+      {
+        test: /\.(eot|svg|woff|woff2|ttf|mp3|mp4|avi)$/,  // 处理其他资源
+        loader: 'file-loader',
+        options: {
+          outputPath: 'media',
+          name: '[hash:5].[ext]'
+        }
+      }
     ]
+  },
+  //配置插件
+  plugins:[
+    new HtmlWebpackPlugin({
+      template: './src/index.html', // 以当前文件为模板创建新的HtML(1. 结构和原来一样 2. 会自动引入打包的资源)
+    })
+  ],
+  //配置自动化编译
+  devServer: {
+    open: true, // 自动打开浏览器
+    compress: true, // 启动gzip压缩
+    port: 3000, // 端口号
   }
 }
 

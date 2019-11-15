@@ -44,7 +44,7 @@ module.exports  = {
         enforce: "pre",  //提前加载使用
         use: ['eslint-loader']
       },
-      //js语法转换（es6->es5）
+      //js语法转换+兼容性处理（es6->es5）
       {
         test: /\.js$/, //只检测js文件
         exclude: /node_modules/,

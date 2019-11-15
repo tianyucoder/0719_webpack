@@ -38,4 +38,4 @@ let myPromise = new Promise((resolve)=>{
 myPromise.then((data)=>{
     console.log(data)
 })
-myPromise()
+//myPromise()

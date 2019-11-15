@@ -5,22 +5,27 @@ const {resolve} = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports  = {
-  //简化写法
+  //入口（简化写法）
   entry:['./src/js/index.js','./src/index.html'], //入口
   /*完整写法：
       entry:{
         main:'./src/js/app.js'
       }
     */
+  //输出
   output: {
     path: resolve(__dirname, 'dist'), //输出路径
     filename: './js/index.js' //输出的文件名
   },
+  //工作模式
   mode: 'development', //配置工作模式
 
-  /*所有的laoder都要在module对象中的rules属性中
-  rules是一个数组，数组中的每一个对象就是一个loader
-  loader特点：下载后无需引入，只需声明*/
+  //配置loader
+  /*
+    1.所有的laoder都要配置在module对象中的rules属性中
+    2.rules是一个数组，数组中的每一个对象就是一个loader
+    3.loader特点：下载后无需引入，只需声明
+  */
   module: {
     rules: [
       //解析less(不完美)
@@ -105,6 +110,7 @@ module.exports  = {
     port: 3000, // 端口号
     hot:true //开启热模替换功能 HMR
   },
+  //配置devtool实现源文件映射
   devtool:'cheap-module-eval-source-map'
 }
 

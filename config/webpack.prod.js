@@ -3,6 +3,7 @@ const {resolve} = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin'); // 注意要解构赋值！！！
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports  = {
   //入口（简化写法）
@@ -35,6 +36,23 @@ module.exports  = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader', //将less编译后的css转换成为CommonJs的一个模块。
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                require('postcss-preset-env')({
+                  autoprefixer: {
+                    flexbox: 'no-2009',
+                  },
+                  stage: 3,
+                }),
+                require('postcss-normalize')(),
+              ],
+              sourceMap: true,
+            },
+          },
           'less-loader' //将less编译为css，但不生成单独的css文件，在内存中。
         ],
       },
@@ -102,11 +120,36 @@ module.exports  = {
   plugins:[
     new HtmlWebpackPlugin({
       template: './src/index.html', // 以当前文件为模板创建新的HtML(1. 结构和原来一样 2. 会自动引入打包的资源)
+      minify: {
+        removeComments: true, //移除注释
+        collapseWhitespace: true, //折叠所有留百
+        removeRedundantAttributes: true, //移除无用的标签
+        useShortDoctype: true,//使用短的文档声明
+        removeEmptyAttributes: true,//移除空标签
+        removeStyleLinkTypeAttributes: true,//移除rel="stylesheet"
+        keepClosingSlash: true,//自结束
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      }
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "css/[hash:5].css",
-    })
+    }),
+    new OptimizeCssAssetsPlugin(
+      {
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+        cssProcessorOptions: { // 解决没有source map问题
+          map: {
+            inline: false,
+            annotation: true,
+          }
+        }
+      }
+    )
   ],
   //配置devtool实现源文件映射
   devtool:'cheap-module-source-map'
